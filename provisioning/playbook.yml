@@ -6,6 +6,7 @@
     - name: update apt list
       apt:
         update_cache: yes
+
     - name: Install prerequisites
       apt:
         name: ['apt-transport-https','ca-certificates','curl','gnupg2','software-properties-common']
@@ -38,8 +39,15 @@
         umask: "0022"
       become: yes
 
-    - name: Pull image
-      command: docker pull 192.168.56.10:5000/qoyod
+    - name: Pull image web
+      docker_image:
+        name: 192.168.56.10:5000/qoyod
+        source: pull
+
+    - name: Pull mysql
+      docker_image:
+        name: mysql:5.7
+        source: pull
 
     - name: Join to swarm
       docker_swarm:
