@@ -44,11 +44,6 @@
         name: 192.168.56.10:5000/qoyod
         source: pull
 
-    - name: Pull mysql
-      docker_image:
-        name: mysql:5.7
-        source: pull
-
     - name: Join to swarm
       docker_swarm:
         state: join
