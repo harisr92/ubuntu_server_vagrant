@@ -9,3 +9,7 @@
   shell: >
     mysql -u root -NBe
     'FLUSH PRIVILEGES;'
+
+- name: Reload AppArmor
+  shell: >
+    apparmor_parser -r /etc/apparmor.d/usr.sbin.mysqld

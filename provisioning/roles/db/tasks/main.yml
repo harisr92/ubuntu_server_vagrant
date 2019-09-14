@@ -5,6 +5,12 @@
     name: ['mysql-server-5.7']
     state: present
 
+- name: Apparmor | Confgure
+  template:
+    src: apparmor-mysqld.conf.j2
+    dest: /etc/apparmor.d/usr.sbin.mysqld
+  notify: Reload AppArmor
+
 - name: MySQL | Update my.cnf
   template:
     src: my.cnf.j2
