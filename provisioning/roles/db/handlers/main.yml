@@ -1,0 +1,11 @@
+---
+# handlers file for db
+- name: Restart mysql
+  service:
+    name: mysql
+    state: restarted
+
+- name: Flush privileges
+  shell: >
+    mysql -u root -NBe
+    'FLUSH PRIVILEGES;'

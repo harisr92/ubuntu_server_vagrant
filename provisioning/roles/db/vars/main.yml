@@ -1,0 +1,4 @@
+---
+# vars file for db
+mysql_root_password: root
+mysql_root_username: root

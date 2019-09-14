@@ -1,0 +1,27 @@
+---
+# tasks file for nginx
+- name: Update apt list
+  apt:
+    update_cache: yes
+
+- name: Install nginx
+  apt:
+    name: ['nginx']
+    state: latest
+
+- name: Setup load balancer
+  template:
+    src: load-balancer.conf.j2
+    dest: /etc/nginx/conf.d/load-balancer.conf
+  notify: Restart nginx
+
+- name: Remove default site
+  file:
+    state: absent
+    path: /etc/nginx/sites-enabled/default
+
+- name: Setup nginx conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Restart nginx
