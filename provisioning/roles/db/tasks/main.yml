@@ -15,8 +15,6 @@
   template:
     src: my.cnf.j2
     dest: /etc/mysql/my.cnf
-  environment:
-    UPDATE_CNF: true
   notify: Restart mysql
 
 - name: MySQL | Update user and password
@@ -24,5 +22,4 @@
     mysql -u root -NBe
     'GRANT ALL PRIVILEGES ON *.* TO "{{ mysql_root_username }}"@"%"
     IDENTIFIED BY "{{ mysql_root_password }}";'
-  when: "'UPDATE_CNF' in ansible_env"
   notify: Flush privileges
