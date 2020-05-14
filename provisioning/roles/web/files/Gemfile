@@ -132,4 +132,4 @@ gem 'bugsnag'
 # Wicked gem helps us to make multi step forms. E.g used it in onBoarding feature'
 gem 'wicked'
 
-gem 'rake', '~>11.2', '>=11.2.2'
+gem 'rake', '~>13.0'
