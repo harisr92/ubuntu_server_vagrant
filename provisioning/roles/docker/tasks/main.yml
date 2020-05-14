@@ -44,14 +44,23 @@
     umask: "0022"
   become: yes
 
-- name: Pull image web
-  docker_image:
-    name: 192.168.56.10:5000/qoyod:latest
-    source: pull
+- name: Set fales
+  copy:
+    src: "{{ item }}"
+    dest: "/opt/"
+  with_items: 
+      - ".app.env" 
+      - "docker-compose.yml"
 
 - name: Join to swarm
   docker_swarm:
-    state: join
-    advertise_addr: "{{ docker_host }}"
-    join_token: "{{ join_token }}"
-    remote_addrs: [ "{{ docker_host }}" ]
+    state: present
+    advertise_addr: "{{swarm_address}}"
+
+- name: Integrator service
+  docker_swarm_service:
+    name: registry
+    image: registry:2
+    publish:
+      - published_port: 5000
+        target_port: 5000

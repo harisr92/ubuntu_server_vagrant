@@ -1,0 +1,62 @@
+---
+# tasks file for web
+- name: update apt list
+  apt:
+    update_cache: yes
+
+- name: Install dependencies
+  apt:
+    name: [
+      "build-essential", "ruby", "tar",  "openssl", "libssl1.0-dev",
+      "libyaml-dev", "libmysqlclient-dev", "zlib1g-dev"
+    ]
+    update_cache: yes
+
+- name: Create ruby src directory
+  file: 
+    path: /usr/src/ruby
+    state: directory
+
+- name: Unarchive ruby
+  unarchive:
+    src: https://cache.ruby-lang.org/pub/ruby/{{ ruby_major }}/ruby-{{ ruby_version }}.tar.xz
+    dest: /usr/src/ruby
+    remote_src: yes
+    creates: /usr/src/ruby/ruby-{{ ruby_version }}
+
+- name: Configure and Install Ruby
+  shell: 
+    chdir: /usr/src/ruby/ruby-{{ ruby_version }} 
+    cmd: /usr/src/ruby/ruby-{{ ruby_version }}/configure --build="$gnuArch" --disable-install-doc --enable-shared && make -j "$(nproc)" && make install 
+    creates: /usr/local/bin/ruby
+
+- name: Set App directory
+  file:
+    path: "{{ app_directory }}"
+    state: directory
+
+- name: Set gemfiles
+  copy:
+    src: "{{ item }}"
+    dest: "{{ app_directory }}/"
+  with_items: 
+      - "Gemfile" 
+      - "Gemfile.lock"  
+
+- name: Bundle install
+  bundler:
+    state: present
+    chdir: "{{ app_directory }}"
+
+- name: Delete app dir
+  file:
+    path: "{{ app_directory }}"
+    state: absent
+
+- name: Install project
+  git:
+    repo: git@gitlab.com:autocloud/qoyod.git
+    version: feat_integrator
+    dest: "{{ app_directory }}"
+    accept_hostkey: yes
+
