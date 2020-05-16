@@ -5,6 +5,7 @@ services:
     command: |
       foreman start
     ports:
+      - 9292:9292
       - 5440:5440
     volumes:
       - /opt/.app.env:/app/.app.env

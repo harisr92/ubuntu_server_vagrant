@@ -56,6 +56,7 @@
   docker_swarm:
     state: present
     advertise_addr: "{{swarm_address}}"
+  notify: Restart docker
 
 - name: Integrator service
   docker_swarm_service:
