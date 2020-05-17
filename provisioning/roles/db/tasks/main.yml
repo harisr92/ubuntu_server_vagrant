@@ -4,6 +4,7 @@
   apt:
     name: ['mysql-server-5.7']
     state: present
+    update_cache: yes
 
 - name: Apparmor | Confgure
   template:

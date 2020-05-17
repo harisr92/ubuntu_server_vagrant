@@ -1,0 +1,15 @@
+---
+# handlers file for redis
+
+- name: enable_redis_service
+  shell:
+    cmd: systemctl enable redis.service
+
+- name: restart_redis_server
+  shell: >
+    kill -9 $(cat /var/run/redis_6379.pid)
+    redis-server /etc/redis.conf
+
+- name: start_redis_server
+  shell:
+    cmd: redis-server /etc/redis.conf

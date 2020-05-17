@@ -77,3 +77,12 @@
   command: docker stack deploy -c /opt/docker-compose.yml integrator
   become: yes
   become_user: root
+
+- name: Create log files
+  file:
+    path: "/var/log/{{item}}"
+    state: touch
+    mode: '0777'
+  with_items:
+    - sidekiq.log
+    - sidekiq_err.log

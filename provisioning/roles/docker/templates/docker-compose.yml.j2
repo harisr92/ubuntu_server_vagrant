@@ -9,5 +9,7 @@ services:
       - 5440:5440
     volumes:
       - /opt/.app.env:/app/.app.env
+      - /var/log/sidekiq.log:/app/log/sidekiq.log
+      - /var/log/sidekiq_err.log:/app/log/sidekiq_err.log
     env_file:
       - /opt/.app.env

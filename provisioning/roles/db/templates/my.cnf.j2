@@ -9,8 +9,14 @@ syslog
 [client]
 user		= {{ mysql_root_username }}
 password = {{ mysql_root_password }}
+default-character-set = utf8mb4
+
+[mysql]
+default-character-set = utf8mb4
 
 [mysqld]
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
 user		= {{ mysql_root_username }}
 pid-file	= /var/run/mysqld/mysqld.pid
 socket		= /var/run/mysqld/mysqld.sock

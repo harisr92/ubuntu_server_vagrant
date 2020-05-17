@@ -1,10 +1,6 @@
 - hosts: web
   become: yes
   roles:
-    - docker
-
-- hosts: db
-  become: yes
-  roles:
-    - nginx
     - db
+    - redis
+    - docker

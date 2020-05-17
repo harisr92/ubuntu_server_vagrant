@@ -1,3 +1,3 @@
 # Ignore dot files
 .vagrant/
-./provisioning/roles/docker/vars/main.yml
+provisioning/roles/**/vars

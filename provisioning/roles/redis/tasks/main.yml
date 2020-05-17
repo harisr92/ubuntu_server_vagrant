@@ -1,0 +1,29 @@
+---
+# tasks file for redis
+
+- name: Redis | build tools
+  apt:
+    name: ["build-essential"]
+    update_cache: yes
+
+- name: Redis | create src dir
+  file:
+    path: /usr/src/redis
+    state: directory
+
+- name: Redis | Download
+  unarchive:
+    src: http://download.redis.io/redis-stable.tar.gz
+    dest: /usr/src/redis
+    remote_src: yes
+    creates: /usr/src/redis/redis-stable
+
+- name: Redis | Build
+  shell:
+    chdir: /usr/src/redis/redis-stable
+    cmd: make install
+    creates: /usr/bin/redis-server
+
+-  debug: msg="trigger redis-start"
+   notify: start_redis_server
+   changed_when: true
