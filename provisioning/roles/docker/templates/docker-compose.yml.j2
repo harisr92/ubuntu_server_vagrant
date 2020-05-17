@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: 192.168.56.12:5000/integrator
+    image: "{{image_name}}"
     command: |
       foreman start
     ports:

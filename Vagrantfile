@@ -22,6 +22,7 @@ Vagrant.configure('2') do |config|
       ansible.playbook = 'provisioning/playbook.yml'
       ansible.become = true
       ansible.compatibility_mode = '2.0'
+      ansible.vault_password_file = "#{ENV['HOME']}/.vault-password"
     end
   end
 

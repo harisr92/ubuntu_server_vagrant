@@ -50,7 +50,11 @@
     dest: "/opt/"
   with_items: 
       - ".app.env" 
-      - "docker-compose.yml"
+
+- name: Replace docker daemon file
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/docker-compose.yml
 
 - name: Join to swarm
   docker_swarm:
@@ -58,10 +62,18 @@
     advertise_addr: "{{swarm_address}}"
   notify: Restart docker
 
-- name: Integrator service
-  docker_swarm_service:
-    name: registry
-    image: registry:2
-    publish:
-      - published_port: 5000
-        target_port: 5000
+- name: Login to docker
+  docker_login:
+    registry: "{{docker_host}}"
+    username: "{{docker_username}}"
+    password: "{{docker_password}}"
+
+- name: Pull integrator image
+  docker_image:
+    name: "{{image_name}}"
+    source: pull
+
+- name: Deploy integrator stack
+  command: docker stack deploy -c /opt/docker-compose.yml integrator
+  become: yes
+  become_user: root
