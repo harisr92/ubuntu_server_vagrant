@@ -1,0 +1,21 @@
+---
+# handlers file for swarm_node
+
+- name: start_docker
+  service:
+    name: docker
+    enabled: yes
+    state: started
+  become: yes
+
+- name: restart_docker
+  service:
+    name: docker
+    state: restarted
+  become: yes
+
+- name: stop_docker
+  service:
+    name: docker
+    state: stoped
+  become: yes

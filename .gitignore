@@ -1,3 +1,2 @@
 # Ignore dot files
 .vagrant/
-provisioning/roles/**/vars

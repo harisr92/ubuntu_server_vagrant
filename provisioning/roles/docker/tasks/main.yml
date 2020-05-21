@@ -49,18 +49,22 @@
     src: "{{ item }}"
     dest: "/opt/"
   with_items: 
-      - ".app.env" 
+      - "app.env" 
 
 - name: Replace docker daemon file
   template:
     src: docker-compose.yml.j2
     dest: /opt/docker-compose.yml
 
+- name: Set environment
+  template:
+    src: environment.j2
+    dest: /etc/environment
+
 - name: Join to swarm
   docker_swarm:
     state: present
     advertise_addr: "{{swarm_address}}"
-  notify: Restart docker
 
 - name: Login to docker
   docker_login:
@@ -84,5 +88,6 @@
     state: touch
     mode: '0777'
   with_items:
-    - sidekiq.log
-    - sidekiq_err.log
+    - thin.log
+    - thin.0.log
+    - thin.9292.log
