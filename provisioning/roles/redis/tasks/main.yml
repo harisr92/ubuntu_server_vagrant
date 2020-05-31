@@ -24,6 +24,11 @@
     cmd: make install
     creates: /usr/bin/redis-server
 
+- name: Redis | Configure file
+  template:
+    src: redis.conf.j2
+    dest: /etc/redis.conf
+
 -  debug: msg="trigger redis-start"
    notify: start_redis_server
    changed_when: true
