@@ -45,9 +45,9 @@
   become: yes
 
 - name: Set fales
-  copy:
-    src: "{{ item }}"
-    dest: "/opt/"
+  template:
+    src: "app.env.j2"
+    dest: "/opt/app.env"
   with_items: 
       - "app.env" 
 
