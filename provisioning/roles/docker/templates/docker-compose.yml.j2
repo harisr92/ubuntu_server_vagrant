@@ -3,7 +3,7 @@ services:
   web:
     image: "{{image_name}}"
     deploy:
-      replicas: 2
+      replicas: 1
     command: |
       foreman start
     ports:

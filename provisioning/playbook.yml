@@ -4,8 +4,3 @@
     - db
     - redis
     - docker
-
-- hosts: alpine
-  become: yes
-  roles:
-    - swarm_node

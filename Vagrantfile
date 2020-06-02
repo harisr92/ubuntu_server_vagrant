@@ -45,30 +45,4 @@ Vagrant.configure('2') do |config|
       }
     end
   end
-
-  config.vm.define 'alpine' do |alpine|
-    alpine.vm.box = 'generic/alpine38'
-    alpine.vm.network 'private_network', ip: '192.168.56.13'
-
-    alpine.vm.provision 'ansible' do |ansible|
-      ansible.playbook = 'provisioning/playbook.yml'
-      ansible.become = true
-      ansible.compatibility_mode = '2.0'
-      ansible.vault_password_file = "#{ENV['HOME']}/.vault-password"
-    end
-
-    alpine.trigger.before :provision do |trigger|
-      trigger.info = 'install python for ansible'
-      trigger.run_remote = {
-        inline: "apk add python docker; service docker start"
-      }
-    end
-
-    alpine.trigger.before :destroy do |trigger|
-      trigger.info = 'Leave node'
-      trigger.run_remote = {
-        inline: "docker swarm leave"
-      }
-    end
-  end
 end

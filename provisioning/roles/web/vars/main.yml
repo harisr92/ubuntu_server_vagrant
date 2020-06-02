@@ -1,7 +1,0 @@
----
-# vars file for web
-ruby_major: "2.3"
-ruby_version: "2.3.7"
-bundler_version: "1.17.3"
-app_directory: "/app"
-project_path: "/Users/hari/work/qoyod"
